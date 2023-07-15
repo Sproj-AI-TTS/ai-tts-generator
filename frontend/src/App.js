@@ -4,7 +4,7 @@ import axios from "axios";
 class App extends Component {
   state = {
     text: "",
-    audioUrl: "",
+    audioUrl: "https://replicate.delivery/pbxt/dOXAlEOwZ7JhAZaAs8XwSGLV15bN9ISfyzmTi5ZSefW5g8fEB/tortoise.mp3",
   };
 
   handleChange = (event) => {

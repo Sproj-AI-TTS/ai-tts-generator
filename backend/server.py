@@ -1,12 +1,25 @@
 from flask import Flask, request
-import datetime
-import replicate
+import requests
 
+from bark import SAMPLE_RATE, generate_audio, preload_models
+from IPython.display import Audio
 
-x = datetime.datetime.now()
+preload_models()
 
 # Initializing flask app
 app = Flask(__name__)
+
+
+
+# headers = {"Authorization": "Bearer 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"}
+# API_URL = "https://api-inference.huggingface.co/models/facebook/wav2vec2-base-960h"
+
+# def query(payload):
+#     response = requests.post(API_URL, headers=headers, json=payload)
+#     return response
+
+# output = query({"inputs": "This is a test"})
+
 
 
 # Route for receiving text
@@ -21,13 +34,13 @@ def receive_text():
         print(req)
 
         try:
-            output = replicate.run(
-                "afiaka87/tortoise-tts:e9658de4b325863c4fcdc12d94bb7c9b54cbfe351b7ca1b36860008172b91c71",
-                input={"text": req}
-            )
+            # output = query({"inputs": "This is a test"})
+            audio_array = generate_audio(req)
+            output=Audio(audio_array, rate=SAMPLE_RATE)
 
-            print("Output:", output)
-            return {"output": output}
+            print(output)
+
+            return output
         
         except Exception as e:
             print("Error:", e)
@@ -39,4 +52,5 @@ def receive_text():
 # Running app
 if __name__ == '__main__':
     app.run(debug=True)
+
 
