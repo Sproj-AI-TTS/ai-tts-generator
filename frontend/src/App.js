@@ -4,7 +4,8 @@ import axios from "axios";
 class App extends Component {
   state = {
     text: "",
-    audioUrl: "https://replicate.delivery/pbxt/dOXAlEOwZ7JhAZaAs8XwSGLV15bN9ISfyzmTi5ZSefW5g8fEB/tortoise.mp3",
+    src: "",
+    audioKey: 0, 
   };
 
   handleChange = (event) => {
@@ -20,16 +21,24 @@ class App extends Component {
         headers: {
           "Content-Type": "application/json",
         },
+        responseType: 'blob',
       });
-      console.log(response.data)
-      this.setState({ audioUrl: response.data.output });
+      const blob = new Blob([response.data], { type: 'audio/mpeg' });
+      const url = URL.createObjectURL(blob);
+      console.log(response.data);
+      
+    
+      this.setState((prevState) => ({
+        src: url,
+        audioKey: prevState.audioKey + 1,
+      }));
     } catch (error) {
       console.log(error);
     }
   };
 
   render() {
-    const { text, audioUrl } = this.state;
+    const { text, src, audioKey } = this.state;
 
     return (
       <div>
@@ -41,11 +50,11 @@ class App extends Component {
         />
         <button onClick={this.handleSubmit}>Submit</button>
 
-        {audioUrl && (
+        {src && (
           <div>
             <h2>Audio:</h2>
-            <audio controls>
-              <source src={audioUrl} type="audio/mpeg" />
+            <audio key={audioKey} controls>
+              <source src={src} type="audio/mpeg" />
               Your browser does not support the audio element.
             </audio>
           </div>

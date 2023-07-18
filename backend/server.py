@@ -1,15 +1,3 @@
-from flask import Flask, request
-import requests
-
-from bark import SAMPLE_RATE, generate_audio, preload_models
-from IPython.display import Audio
-
-preload_models()
-
-# Initializing flask app
-app = Flask(__name__)
-
-
 
 # headers = {"Authorization": "Bearer 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"}
 # API_URL = "https://api-inference.huggingface.co/models/facebook/wav2vec2-base-960h"
@@ -20,27 +8,44 @@ app = Flask(__name__)
 
 # output = query({"inputs": "This is a test"})
 
+from flask import Flask, send_file, request
+from gtts import gTTS
+import os
+from flask_cors import CORS, cross_origin
+
+
+app = Flask(__name__)
+cors = CORS(app)
+
+
 
 
 # Route for receiving text
 @app.route('/',methods=['POST', 'GET'])
+@cross_origin()
 def receive_text():
 
+
     # Getting the text from the request
-
-
     if request.method == 'POST':
         req = request.json['text']
         print(req)
+        
 
         try:
-            # output = query({"inputs": "This is a test"})
-            audio_array = generate_audio(req)
-            output=Audio(audio_array, rate=SAMPLE_RATE)
+          
+            audio_output = gTTS(req)
+            audio_file = "output.mp3"
+            audio_output.save(os.path.join(os.path.dirname(__file__), audio_file))
+            return send_file(audio_file, mimetype="audio/mp3")
+        
+            # # output = query({"inputs": "This is a test"})
+            # audio_array = generate_audio(req)
+            # output=Audio(audio_array, rate=SAMPLE_RATE)
 
-            print(output)
+            # print(output)
 
-            return output
+      
         
         except Exception as e:
             print("Error:", e)
