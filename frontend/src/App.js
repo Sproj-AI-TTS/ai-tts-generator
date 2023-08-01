@@ -14,7 +14,8 @@ class App extends Component {
     });
   };
 
-  handleSubmit = async (event) => {
+  handleSubmit = async (event) =>
+  {
     event.preventDefault();
     try {
       const response = await axios.post("/", { text: this.state.text }, {
@@ -26,8 +27,7 @@ class App extends Component {
       const blob = new Blob([response.data], { type: 'audio/mpeg' });
       const url = URL.createObjectURL(blob);
       console.log(response.data);
-      
-    
+
       this.setState((prevState) => ({
         src: url,
         audioKey: prevState.audioKey + 1,
@@ -37,17 +37,22 @@ class App extends Component {
     }
   };
 
-  render() {
+  render()
+  {
     const { text, src, audioKey } = this.state;
-
+    const maxLength = 30
     return (
       <div>
         <h1>Simple Textbox</h1>
         <input
           type="text"
           value={text}
+          maxlength={maxLength}
           onChange={this.handleChange}
         />
+        <div>
+          Character count: {text.length} / {maxLength}
+        </div>
         <button onClick={this.handleSubmit}>Submit</button>
 
         {src && (
