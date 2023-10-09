@@ -40,10 +40,10 @@ def receive_text():
                 engine.setProperty("voice", voices[0].id)
             elif gender == 'male2':
                 engine.setProperty("voice", voices[11].id)
+            elif gender == 'female1':
+                engine.setProperty("voice", voices[41].id)
             elif gender == 'female2':
-                engine.setProperty("voice", voices[38].id)
-            elif gender == 'female2':
-                engine.setProperty("voice", voices[40].id)
+                engine.setProperty("voice", voices[10].id)
             
 
             engine.setProperty("pitch", pitch)

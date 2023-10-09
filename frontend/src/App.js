@@ -96,7 +96,7 @@ class App extends Component {
 
         {/* Rate input */}
         <label>
-          Rate (0.1 to 10):
+          Rate (1 to 1000):
           <input
             type="number"
             step="0.1"
