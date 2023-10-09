@@ -1,23 +1,15 @@
-
-# headers = {"Authorization": "Bearer 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"}
-# API_URL = "https://api-inference.huggingface.co/models/facebook/wav2vec2-base-960h"
-
-# def query(payload):
-#     response = requests.post(API_URL, headers=headers, json=payload)
-#     return response
-
-# output = query({"inputs": "This is a test"})
-
 from flask import Flask, send_file, request
 from gtts import gTTS
 import os
 from flask_cors import CORS, cross_origin
+import pyttsx3
 
 
 app = Flask(__name__)
 cors = CORS(app)
 
-
+# MAle id 0,7,11,32
+# Female id10,28,33,38,40,41
 
 
 # Route for receiving text
@@ -29,23 +21,45 @@ def receive_text():
     # Getting the text from the request
     if request.method == 'POST':
         req = request.json['text']
+        pitch = float(request.json.get('pitch', 0.5))
+        rate = int(request.json.get('rate', 150))
+        gender = request.json.get('gender', 'male1') 
         print(req)
+        print("Pitch:",  pitch)
+        print("Rate:", rate)
+
         
 
         try:
-          
-            audio_output = gTTS(req)
+
+            engine = pyttsx3.init()
+            engine.setProperty('voice', 'en-us')
+            voices = engine.getProperty('voices')
+
+            if gender == 'male1':
+                engine.setProperty("voice", voices[0].id)
+            elif gender == 'male2':
+                engine.setProperty("voice", voices[11].id)
+            elif gender == 'female2':
+                engine.setProperty("voice", voices[38].id)
+            elif gender == 'female2':
+                engine.setProperty("voice", voices[40].id)
+            
+
+            engine.setProperty("pitch", pitch)
+            engine.setProperty('rate', rate)
+
             audio_file = "output.mp3"
-            audio_output.save(os.path.join(os.path.dirname(__file__), audio_file))
-            return send_file(audio_file, mimetype="audio/mp3")
+
+            engine.save_to_file(req , os.path.join(os.path.dirname(__file__), audio_file))
+            engine.runAndWait()
+          
+            # audio_output = gTTS(req)
+            
+            # audio_output.save(os.path.join(os.path.dirname(__file__), audio_file))
+            return send_file(audio_file, mimetype="audio/mpeg",as_attachment=True)
         
-            # # output = query({"inputs": "This is a test"})
-            # audio_array = generate_audio(req)
-            # output=Audio(audio_array, rate=SAMPLE_RATE)
 
-            # print(output)
-
-      
         
         except Exception as e:
             print("Error:", e)
