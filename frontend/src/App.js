@@ -6,7 +6,8 @@ class App extends Component {
     text: "",
     pitch: 0.5,
     rate: 0.5,
-    gender: "announcer", // Default gender selection
+    speaker: "announcer", // Default speaker selection
+    selectedGender: "male",
     src: "",
     audioKey: 0,
   };
@@ -31,21 +32,29 @@ class App extends Component {
     });
   };
 
-  handleGenderChange = (event) => {
-    const gender = event.target.value;
+  handleSpeakererChange = (event) => {
+    const speaker = event.target.value;
     this.setState({
-      gender: gender,
+      speaker: speaker,
     });
   };
+
+  handleGenderChange = (event) => {
+    const selectedGender = event.target.value;
+    this.setState({
+      selectedGender: selectedGender,
+    });
+  };
+
 
   handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { text, pitch, rate, gender } = this.state;
+      const { text, pitch, rate, speaker, selectedGender } = this.state;
 
       const response = await axios.post(
         "/",
-        { text, pitch, rate, gender },
+        { text, pitch, rate, speaker, selectedGender },
         {
           headers: {
             "Content-Type": "application/json",
@@ -65,7 +74,7 @@ class App extends Component {
   };
 
   render() {
-    const { text, pitch, rate, gender, src, audioKey } = this.state;
+    const { text, pitch, rate, speaker, src, audioKey } = this.state;
     const maxLength = 30;
 
     // Define the gender options
@@ -245,12 +254,21 @@ class App extends Component {
         {/* Gender selection dropdown */}
         <label>
           Select Speaker:
-          <select value={gender} onChange={this.handleGenderChange}>
+          <select value={speaker} onChange={this.handleSpeakererChange}>
             {genderOptions.map((option) => (
               <option key={option} value={option}>
                 {option}
               </option>
             ))}
+          </select>
+        </label>
+
+
+        <label>
+          Select Gender:
+          <select value={this.state.selectedGender} onChange={this.handleGenderChange}>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
           </select>
         </label>
 

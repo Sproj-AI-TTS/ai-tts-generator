@@ -28,11 +28,20 @@ def receive_text():
         req = request.json['text']
         wave_temp = float(request.json.get('pitch', 0.5))
         text_temp = float(request.json.get('rate', 0.5))
-        gender = request.json.get('gender', 'announcer') 
-        print(req)
+        speaker = request.json.get('speaker', 'announcer') 
+        gender=request.json.get('selectedGender','male')
+        print(gender)
+        
         print("wave_temp:",  wave_temp)
         print("text_temp:", text_temp)
-        print("Speaker:", gender)
+        print("Speaker:", speaker)
+
+        if gender == 'male':
+            req= "[MAN]:"+req
+        elif gender == 'female' :
+            req= "[WOMAN]:"+req
+
+        print(req)
 
         
 
@@ -41,7 +50,7 @@ def receive_text():
             output = replicate.run(
             "suno-ai/bark:b76242b40d67c76ab6742e987628a2a9ac019e11d56ab96c4e91ce03b79b2787",
             input={ "prompt": req,
-                   "history_prompt": gender,
+                   "history_prompt": speaker,
                    "sample_rate":4 ,
                    "text_temp":text_temp,
                    "wave_temp":wave_temp,
