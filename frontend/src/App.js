@@ -73,9 +73,10 @@ class App extends Component {
     }
   };
 
-  render() {
+  render()
+  {
     const { text, pitch, rate, speaker, src, audioKey } = this.state;
-    const maxLength = 30;
+    // const maxLength = 30;
 
     // Define the gender options
     const genderOptions = [
@@ -213,78 +214,94 @@ class App extends Component {
     ];
 
     return (
-      <div>
-        <h1>Simple Textbox</h1>
-        <input
-          type="text"
-          value={text}
-          maxLength={maxLength}
-          onChange={this.handleChange}
-        />
-        <div>
-          Character count: {text.length} / {maxLength}
-        </div>
-
-        {/* Pitch input */}
-        <label>
-        waveform_temp (0 to 1):
-          <input
-            type="number"
-            step="0.01"
-            min="0"
-            max="1"
-            value={pitch}
-            onChange={this.handlePitchChange}
-          />
-        </label>
-
-        {/* Rate input */}
-        <label>
-          text_temp (0 to 1):
-          <input
-            type="number"
-            step="0.1"
-            min="0"
-            max="1"
-            value={rate}
-            onChange={this.handleRateChange}
-          />
-        </label>
-
-        {/* Gender selection dropdown */}
-        <label>
-          Select Speaker:
-          <select value={speaker} onChange={this.handleSpeakererChange}>
-            {genderOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </label>
-
-
-        <label>
-          Select Gender:
-          <select value={this.state.selectedGender} onChange={this.handleGenderChange}>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-        </label>
-
-        <button onClick={this.handleSubmit}>Submit</button>
-
-        {src && (
-          <div>
-            <h2>Audio:</h2>
-            <audio key={audioKey} controls>
-              <source src={src} type="audio/mpeg" />
-              Your browser does not support the audio element.
-            </audio>
+      <body style={{ backgroundColor: "#192841", margin: 0, fontFamily: "Arial, sans-serif", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "white" }}>
+        <div style={{ maxWidth: "600px", padding: "20px", textAlign: "center" }}>
+          {/* Heading */}
+          <h1 style={{ marginBottom: "20px" }}>AI Text-to-Speech Generator</h1>
+    
+          {/* Larger input box for paragraphs */}
+          <div style={{ marginBottom: "20px" }}>
+            <textarea
+              style={{ width: "100%", height: "150px", padding: "10px", fontSize: "16px" }}
+              value={text}
+              onChange={this.handleChange}
+              placeholder="Enter your text here..."
+            />
+            <div style={{ marginTop: "10px", fontSize: "14px" }}>
+              Character count: {text.length}
+            </div>
           </div>
-        )}
-      </div>
-    );
+    
+          {/* Input boxes in a list */}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            {/* Pitch input */}
+            <label>
+              Waveform Temp (0 to 1):
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                max="1"
+                value={pitch}
+                onChange={this.handlePitchChange}
+              />
+            </label>
+    
+            {/* Rate input */}
+            <label style={{ margin: "10px 0" }}>
+              Text Temp (0 to 1):
+              <input
+                type="number"
+                step="0.1"
+                min="0"
+                max="1"
+                value={rate}
+                onChange={this.handleRateChange}
+              />
+            </label>
+    
+            {/* Gender selection dropdown */}
+            <label style={{ margin: "10px 0" }}>
+              Select Speaker:
+              <select value={speaker} onChange={this.handleSpeakerChange}>
+                {genderOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </label>
+    
+            <label style={{ margin: "10px 0" }}>
+              Select Gender:
+              <select value={this.state.selectedGender} onChange={this.handleGenderChange}>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </label>
+    
+            <button style={{ margin: "10px 0" }} onClick={this.handleSubmit}>
+              Submit
+            </button>
+    
+            {/* Placeholder for audio output before program run */}
+            <div style={{ margin: "20px 0" }}>
+              <h2>Audio Output:</h2>
+            </div>
+    
+            {/* Actual audio output after program run */}
+            {src && (
+              <div style={{ margin: "10px 0" }}>
+                <audio key={audioKey} controls>
+                  <source src={src} type="audio/mpeg" />
+                  Your browser does not support the audio element.
+                </audio>
+              </div>
+            )}
+          </div>
+        </div>
+      </body>
+    );    
   }
 }
 
