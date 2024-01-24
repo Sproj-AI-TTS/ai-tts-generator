@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
   state = {
@@ -32,7 +33,7 @@ class App extends Component {
     });
   };
 
-  handleSpeakererChange = (event) => {
+  handleSpeakerChange = (event) => {
     const speaker = event.target.value;
     this.setState({
       speaker: speaker,
@@ -214,7 +215,7 @@ class App extends Component {
     ];
 
     return (
-      <body style={{ backgroundColor: "#192841", margin: 0, fontFamily: "Arial, sans-serif", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "white" }}>
+      <body style={{ backgroundColor: "#1d033a", margin: 0, fontFamily: "Arial, sans-serif", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "white" }}>
         <div style={{ maxWidth: "600px", padding: "20px", textAlign: "center" }}>
           {/* Heading */}
           <h1 style={{ marginBottom: "20px" }}>AI Text-to-Speech Generator</h1>
@@ -222,7 +223,8 @@ class App extends Component {
           {/* Larger input box for paragraphs */}
           <div style={{ marginBottom: "20px" }}>
             <textarea
-              style={{ width: "100%", height: "150px", padding: "10px", fontSize: "16px" }}
+              className="form-control"
+              style={{ backgroundColor: "#e0e7ed", width: "100%", height: "150px", padding: "10px", fontSize: "16px" }}
               value={text}
               onChange={this.handleChange}
               placeholder="Enter your text here..."
@@ -231,13 +233,14 @@ class App extends Component {
               Character count: {text.length}
             </div>
           </div>
-    
+
           {/* Input boxes in a list */}
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div className="form-control" style={{ backgroundColor: "#e0c0ed", display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "10px" }}>
             {/* Pitch input */}
             <label>
               Waveform Temp (0 to 1):
               <input
+                className="param-box"
                 type="number"
                 step="0.01"
                 min="0"
@@ -251,6 +254,7 @@ class App extends Component {
             <label style={{ margin: "10px 0" }}>
               Text Temp (0 to 1):
               <input
+                className="param-box"
                 type="number"
                 step="0.1"
                 min="0"
@@ -263,7 +267,7 @@ class App extends Component {
             {/* Gender selection dropdown */}
             <label style={{ margin: "10px 0" }}>
               Select Speaker:
-              <select value={speaker} onChange={this.handleSpeakerChange}>
+              <select className="param-box" value={speaker} onChange={this.handleSpeakerChange}>
                 {genderOptions.map((option) => (
                   <option key={option} value={option}>
                     {option}
@@ -274,13 +278,13 @@ class App extends Component {
     
             <label style={{ margin: "10px 0" }}>
               Select Gender:
-              <select value={this.state.selectedGender} onChange={this.handleGenderChange}>
+              <select className="param-box" value={this.state.selectedGender} onChange={this.handleGenderChange}>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
               </select>
             </label>
     
-            <button style={{ margin: "10px 0" }} onClick={this.handleSubmit}>
+            <button style={{ backgroundColor: "yellow", borderRadius: "4px" }} onClick={this.handleSubmit}>
               Submit
             </button>
     
