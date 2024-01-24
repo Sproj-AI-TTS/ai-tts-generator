@@ -75,23 +75,9 @@ class App extends Component {
     }
   };
 
-
-  handleCapitalize = () => {
-    const { text } = this.state;
-    const selectedText = window.getSelection().toString();
-
-    if (selectedText) {
-      const capitalizedText = text.replace(selectedText, selectedText.toUpperCase());
-
-      this.setState({
-        text: capitalizedText,
-      });
-    }
-  };
-
   render() {
     const { text, pitch, rate, speaker, src, audioKey } = this.state;
-    const maxLength = 30;
+    // const maxLength = 30;
 
     // Define the gender options
     const genderOptions = [
@@ -289,9 +275,6 @@ class App extends Component {
         </label>
 
         <button onClick={this.handleSubmit}>Submit</button>
-
-         {/* Capitalize button */}
-         <button onClick={this.handleCapitalize}>Emphasize</button>
 
         {src && (
           <div>
