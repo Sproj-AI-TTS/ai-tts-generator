@@ -62,6 +62,8 @@ class App extends Component {
         }
       );
 
+      
+
       const audioLink = response.data;
 
       this.setState((prevState) => ({
@@ -70,6 +72,20 @@ class App extends Component {
       }));
     } catch (error) {
       console.log(error);
+    }
+  };
+
+
+  handleCapitalize = () => {
+    const { text } = this.state;
+    const selectedText = window.getSelection().toString();
+
+    if (selectedText) {
+      const capitalizedText = text.replace(selectedText, selectedText.toUpperCase());
+
+      this.setState({
+        text: capitalizedText,
+      });
     }
   };
 
@@ -273,6 +289,9 @@ class App extends Component {
         </label>
 
         <button onClick={this.handleSubmit}>Submit</button>
+
+         {/* Capitalize button */}
+         <button onClick={this.handleCapitalize}>Emphasize</button>
 
         {src && (
           <div>
