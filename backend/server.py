@@ -1,9 +1,10 @@
 from flask import Flask, send_file, request
 from gtts import gTTS
-import os
 from flask_cors import CORS, cross_origin
-import pyttsx3
+from pydub import AudioSegment
+from pydub.playback import play
 import replicate
+import io
 from os import environ
 from getpass import getpass
 # import REPLICATE_API_TOKEN
@@ -57,7 +58,16 @@ def receive_text():
                 }
             )
             print(output)
-            return output['audio_out']
+            audio_content = io.BytesIO(output['audio_out'])
+            audio_segment = AudioSegment.from_file(audio_content, format="mp3")
+
+            # Modify pitch using the speedup or slowdown technique
+            modified_pitch = audio_segment.speedup(playback_speed=wave_temp)
+
+            # Convert the modified audio segment back to bytes
+            modified_audio_bytes = modified_pitch.export(format="mp3").read()
+
+            return send_file(io.BytesIO(modified_audio_bytes), mimetype="audio/mpeg")
 
             # audio_link = output['audio_out']
 

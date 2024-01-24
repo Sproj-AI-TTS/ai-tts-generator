@@ -6,10 +6,12 @@ class App extends Component {
     text: "",
     pitch: 0.5,
     rate: 0.5,
+    waveform:0.5,
     speaker: "announcer", // Default speaker selection
     selectedGender: "male",
     src: "",
     audioKey: 0,
+    maxLength: 100,
   };
 
   handleChange = (event) => {
@@ -18,10 +20,30 @@ class App extends Component {
     });
   };
 
+  handleCapitalize = () => {
+    const { text } = this.state;
+    const selectedText = window.getSelection().toString();
+
+    if (selectedText) {
+      const capitalizedText = text.replace(selectedText, selectedText.toUpperCase());
+
+      this.setState({
+        text: capitalizedText,
+      });
+    }
+  };
+
   handlePitchChange = (event) => {
     const pitch = event.target.value;
     this.setState({
       pitch: pitch,
+    });
+  };
+
+  handlewaveformChange = (event) => {
+    const waveform = event.target.value;
+    this.setState({
+      waveform: waveform,
     });
   };
 
@@ -66,6 +88,8 @@ class App extends Component {
 
       const audioLink = response.data;
 
+      
+
       this.setState((prevState) => ({
         src: audioLink,
         audioKey: prevState.audioKey + 1,
@@ -76,7 +100,7 @@ class App extends Component {
   };
 
   render() {
-    const { text, pitch, rate, speaker, src, audioKey } = this.state;
+    const { text, pitch,waveform, rate, speaker, src, audioKey,maxLength } = this.state;
     // const maxLength = 30;
 
     // Define the gender options
@@ -227,7 +251,21 @@ class App extends Component {
           Character count: {text.length} / {maxLength}
         </div>
 
+
         {/* Pitch input */}
+        <label>
+        Pitch (0 to 1):
+          <input
+            type="number"
+            step="0.01"
+            min="0"
+            max="1"
+            value={pitch}
+            onChange={this.handlePitchChange}
+          />
+        </label>
+
+        {/* waveform_temp input */}
         <label>
         waveform_temp (0 to 1):
           <input
@@ -236,7 +274,7 @@ class App extends Component {
             min="0"
             max="1"
             value={pitch}
-            onChange={this.handlePitchChange}
+            onChange={this.handlewaveformChange}
           />
         </label>
 
@@ -275,6 +313,9 @@ class App extends Component {
         </label>
 
         <button onClick={this.handleSubmit}>Submit</button>
+
+        <button onClick={this.handleCapitalize}>Capitalize</button>
+
 
         {src && (
           <div>
