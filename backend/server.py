@@ -27,7 +27,7 @@ def receive_text():
     # Getting the text from the request
     if request.method == 'POST':
         req = request.json['text']
-        wave_temp = float(request.json.get('pitch', 0.5))
+        wave_temp = float(request.json.get('waveform', 0.5))
         text_temp = float(request.json.get('rate', 0.5))
         speaker = request.json.get('speaker', 'announcer') 
         gender=request.json.get('selectedGender','male')

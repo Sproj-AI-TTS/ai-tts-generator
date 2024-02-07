@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSound } from 'use-sound';
 import axios from 'axios';
 import Select from "react-tailwindcss-select";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -6,7 +7,7 @@ import 'react-tailwindcss-select/dist/index.css'
 const App = () => {
   const [state, setState] = useState({
     text: '',
-    pitch: 0.5,
+    pitch: 1,
     rate: 0.5,
     waveform:0.5,
     speaker: 'announcer',
@@ -15,12 +16,45 @@ const App = () => {
     audioKey: 0,
   });
 
+
+
+
+
+
+  const handlePitchChange = (event) => {
+    setState({
+      ...state,
+      pitch: parseFloat(event.target.value), 
+    });
+
+    play({ playbackRate: this.state.pitch });
+  };
+
+
+
+  const handlePitchDecrement = () => {
+    setState((prevState) => ({
+      ...prevState,
+      pitch: Math.max(prevState.pitch - 0.01, 0.5), // Adjust the decrement logic
+    }));
+    play({ playbackRate: this.state.pitch });
+  };
+
+  const handlePitchIncrement = () => {
+    setState((prevState) => ({
+      ...prevState,
+      pitch: Math.min(prevState.pitch + 0.01, 2), // Adjust the increment logic
+    }));
+    play({ playbackRate: this.state.pitch });
+  };
+
   const handleWaveformChange = (event) => {
     setState({
       ...state,
       waveform: parseFloat(event.target.value), 
     });
   };
+
 
 
 
@@ -74,29 +108,6 @@ const App = () => {
   };
 
 
-  const handlePitchChange = (event) => {
-    setState({
-      ...state,
-      pitch: parseFloat(event.target.value), 
-    });
-  };
-
-
-
-  const handlePitchDecrement = () => {
-    setState((prevState) => ({
-      ...prevState,
-      pitch: Math.max(prevState.pitch - 0.01, 0), // Adjust the decrement logic
-    }));
-  };
-
-  const handlePitchIncrement = () => {
-    setState((prevState) => ({
-      ...prevState,
-      pitch: Math.min(prevState.pitch + 0.01, 1), // Adjust the increment logic
-    }));
-  };
-
 
   const handleCapitalize = () => {
     const { text } = state;
@@ -131,11 +142,11 @@ const App = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { text, pitch, rate, speaker, selectedGender } = state;
+      const { text, waveform, rate, speaker, selectedGender } = state;
 
       const response = await axios.post(
         '/',
-        { text, pitch, rate, speaker, selectedGender },
+        { text, waveform, rate, speaker, selectedGender },
         {
           headers: {
             'Content-Type': 'application/json',
@@ -146,6 +157,8 @@ const App = () => {
       
 
       const audioLink = response.data;
+
+
 
       
 
@@ -159,7 +172,10 @@ const App = () => {
     }
   };
 
-  const { text, pitch, rate, speaker, src, audioKey } = state;
+  
+
+  const { text, pitch, rate,waveform, speaker, src, audioKey } = state;
+  const [play] = useSound(src, { playbackRate: 1.0 });
 
   const genderOptions = [
     { value: "announcer", label: "🔊 announcer" },
@@ -359,7 +375,7 @@ const App = () => {
                   className="outline-none focus:outline-none text-center w-full bg-gray-200 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-900"
                   name="custom-input-number"
                   step="0.01" min="0" max="1"
-                  value={pitch}
+                  value={waveform}
                   onChange={handleWaveformChange}
                 // onDecrement={handlePitchDecrement}
                 // onIncrement={handlePitchIncrement}
@@ -406,7 +422,7 @@ const App = () => {
 
             <div className="custom-number-input h-10 w-full flex items-center justify-start ">
               <label htmlFor="custom-input-number" className="w-full text-gray-300 text-base font-semibold">
-                Pitch (0 to 1):
+                Pitch (0.5 to 2):
               </label>
               <div className="flex flex-row h-9 rounded-lg relative bg-transparent mt-1">
                 <button
@@ -419,8 +435,8 @@ const App = () => {
                   type="numbe"
                   className="outline-none focus:outline-none text-center w-full bg-gray-200 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-900"
                   name="custom-input-number"
-                  step="0.01" min="0" max="1"
-                  value={rate}
+                  step="0.01" min="0.5" max="2"
+                  value={pitch}
                   onChange={handlePitchChange}
                 />
                 <button
