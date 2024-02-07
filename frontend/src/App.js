@@ -14,40 +14,33 @@ const App = () => {
     src: '',
     audioKey: 0,
   });
-  const handlePitchChange = (event) => {
+
+  const handleWaveformChange = (event) => {
     setState({
       ...state,
-      pitch: parseFloat(event.target.value), // Parse the input value to a float
+      waveform: parseFloat(event.target.value), 
     });
   };
 
-  const handleCapitalize = () => {
-    const { text } = state;
-    const selectedText = window.getSelection().toString();
 
-    if (selectedText) {
-      const capitalizedText = text.replace(selectedText, selectedText.toUpperCase());
 
-      setState({
-        ...state,
-        text: capitalizedText,
-      });
-    }
-  };
 
-  const handlePitchDecrement = () => {
+  const handleWaveformDecrement = () => {
     setState((prevState) => ({
       ...prevState,
-      pitch: Math.max(prevState.pitch - 0.01, 0), // Adjust the decrement logic
+      pitch: Math.max(prevState.waveform - 0.01, 0), // Adjust the decrement logic
     }));
   };
 
-  const handlePitchIncrement = () => {
+  const handleWaveformIncrement = () => {
     setState((prevState) => ({
       ...prevState,
-      pitch: Math.min(prevState.pitch + 0.01, 1), // Adjust the increment logic
+      pitch: Math.min(prevState.waveform + 0.01, 1), // Adjust the increment logic
     }));
   };
+
+
+
   const handleRateChange = (event) => {
     setState({
       ...state,
@@ -55,13 +48,8 @@ const App = () => {
     });
   };
 
-  const handleWaveformChange = (event) => {
-    const waveform = event.target.value;
-    setState({
-      ...state,
-      waveform: waveform,
-    });
-  };
+
+
 
   const handleRateDecrement = () => {
     setState((prevState) => ({
@@ -76,11 +64,52 @@ const App = () => {
       rate: Math.min(prevState.pitch + 0.01, 1), // Adjust the increment logic
     }));
   };
+
+
   const handleChange = (event) => {
     setState({
       ...state,
       text: event.target.value,
     });
+  };
+
+
+  const handlePitchChange = (event) => {
+    setState({
+      ...state,
+      pitch: parseFloat(event.target.value), 
+    });
+  };
+
+
+
+  const handlePitchDecrement = () => {
+    setState((prevState) => ({
+      ...prevState,
+      pitch: Math.max(prevState.pitch - 0.01, 0), // Adjust the decrement logic
+    }));
+  };
+
+  const handlePitchIncrement = () => {
+    setState((prevState) => ({
+      ...prevState,
+      pitch: Math.min(prevState.pitch + 0.01, 1), // Adjust the increment logic
+    }));
+  };
+
+
+  const handleCapitalize = () => {
+    const { text } = state;
+    const selectedText = window.getSelection().toString();
+
+    if (selectedText) {
+      const capitalizedText = text.replace(selectedText, selectedText.toUpperCase());
+
+      setState({
+        ...state,
+        text: capitalizedText,
+      });
+    }
   };
 
 
@@ -320,7 +349,7 @@ const App = () => {
               </label>
               <div className="flex flex-row h-9 rounded-lg relative bg-transparent mt-1">
                 <button
-                  onClick={handlePitchDecrement}
+                  onClick={handleWaveformDecrement}
                   className="bg-gray-200 text-gray-900 hover:text-gray-700 hover:bg-gray-100 h-full w-20 rounded-l cursor-pointer outline-none border-r-[1px] border-gray-300"
                 >
                   <span className="m-auto text-2xl font-thin">−</span>
@@ -331,14 +360,14 @@ const App = () => {
                   name="custom-input-number"
                   step="0.01" min="0" max="1"
                   value={pitch}
-                  onChange={handlePitchChange}
+                  onChange={handleWaveformChange}
                 // onDecrement={handlePitchDecrement}
                 // onIncrement={handlePitchIncrement}
                 // onChange={handlePitchChange}
                 // value={value.toFixed(2)} // Display value with two decimal places
                 />
                 <button
-                  onClick={handlePitchIncrement}
+                  onClick={handleWaveformIncrement}
                   className="bg-gray-200 text-gray-900 hover:text-gray-700 hover:bg-gray-100 h-full w-20 rounded-r cursor-pointer border-l-[1px] border-gray-300"
                 >
                   <span className="m-auto text-2xl font-thin">+</span>
@@ -367,6 +396,35 @@ const App = () => {
                 />
                 <button
                   onClick={handleRateIncrement}
+                  className="bg-gray-200 text-gray-900 hover:text-gray-700 hover:bg-gray-100 h-full w-20 rounded-r cursor-pointer border-l-[1px] border-gray-300"
+                >
+                  <span className="m-auto text-2xl font-thin">+</span>
+                </button>
+              </div>
+            </div>
+
+
+            <div className="custom-number-input h-10 w-full flex items-center justify-start ">
+              <label htmlFor="custom-input-number" className="w-full text-gray-300 text-base font-semibold">
+                Pitch (0 to 1):
+              </label>
+              <div className="flex flex-row h-9 rounded-lg relative bg-transparent mt-1">
+                <button
+                  onClick={handlePitchDecrement}
+                  className="bg-gray-200 text-gray-900 hover:text-gray-700 hover:bg-gray-100 h-full w-20 rounded-l cursor-pointer outline-none border-r-[1px] border-gray-300"
+                >
+                  <span className="m-auto text-2xl font-thin">−</span>
+                </button>
+                <input
+                  type="numbe"
+                  className="outline-none focus:outline-none text-center w-full bg-gray-200 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-900"
+                  name="custom-input-number"
+                  step="0.01" min="0" max="1"
+                  value={rate}
+                  onChange={handlePitchChange}
+                />
+                <button
+                  onClick={handlePitchIncrement}
                   className="bg-gray-200 text-gray-900 hover:text-gray-700 hover:bg-gray-100 h-full w-20 rounded-r cursor-pointer border-l-[1px] border-gray-300"
                 >
                   <span className="m-auto text-2xl font-thin">+</span>
@@ -403,7 +461,7 @@ const App = () => {
             <button className='bg-blue-500 shadow-xl shadow-blue-500/50 py-2 px-4 rounded-lg text-white font-semibold' onClick={handleCapitalize}>
               Emphasize
             </button>
-            
+
             <button className='bg-blue-500 shadow-xl shadow-blue-500/50 py-2 px-4 rounded-lg text-white font-semibold' onClick={handleSubmit}>
               Submit
             </button>
