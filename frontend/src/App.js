@@ -19,12 +19,12 @@ const App = () => {
 
 
 
-
+  const [play] = useSound(state.src, { playbackRate: state.pitch });
 
   const handlePitchChange = (event) => {
     setState({
       ...state,
-      pitch: parseFloat(event.target.value), 
+      pitch: parseFloat(event.target.value).toFixed(2), 
     });
 
   
@@ -35,7 +35,7 @@ const App = () => {
   const handlePitchDecrement = () => {
     setState((prevState) => ({
       ...prevState,
-      pitch: Math.max(prevState.pitch - 0.01, 0.5), // Adjust the decrement logic
+      pitch: Math.max((prevState.pitch - 0.01).toFixed(2), 0.5), // Adjust the decrement logic
     }));
     
   };
@@ -43,7 +43,7 @@ const App = () => {
   const handlePitchIncrement = () => {
     setState((prevState) => ({
       ...prevState,
-      pitch: Math.min(prevState.pitch + 0.01, 2), // Adjust the increment logic
+      pitch: Math.min((prevState.pitch + 0.01).toFixed(2), 2), // Adjust the increment logic
     }));
 
   };
@@ -51,7 +51,7 @@ const App = () => {
   const handleWaveformChange = (event) => {
     setState({
       ...state,
-      waveform: parseFloat(event.target.value), 
+      waveform: parseFloat(event.target.value).toFixed(2), 
     });
   };
 
@@ -62,14 +62,14 @@ const App = () => {
   const handleWaveformDecrement = () => {
     setState((prevState) => ({
       ...prevState,
-      pitch: Math.max(prevState.waveform - 0.01, 0), // Adjust the decrement logic
+      waveform: Math.max((prevState.waveform - 0.01).toFixed(2), 0), // Adjust the decrement logic
     }));
   };
 
   const handleWaveformIncrement = () => {
     setState((prevState) => ({
       ...prevState,
-      pitch: Math.min(prevState.waveform + 0.01, 1), // Adjust the increment logic
+      waveform: Math.min((prevState.waveform + 0.01).toFixed(2), 1), // Adjust the increment logic
     }));
   };
 
@@ -78,7 +78,7 @@ const App = () => {
   const handleRateChange = (event) => {
     setState({
       ...state,
-      rate: parseFloat(event.target.value), // Parse the input value to a float
+      rate: parseFloat(event.target.value).toFixed(2), // Parse the input value to a float
     });
   };
 
@@ -88,14 +88,14 @@ const App = () => {
   const handleRateDecrement = () => {
     setState((prevState) => ({
       ...prevState,
-      rate: Math.max(prevState.pitch - 0.01, 0), // Adjust the decrement logic
+      rate: Math.max((prevState.rate - 0.01).toFixed(2), 0), // Adjust the decrement logic
     }));
   };
 
   const handleRateIncrement = () => {
     setState((prevState) => ({
       ...prevState,
-      rate: Math.min(prevState.pitch + 0.01, 1), // Adjust the increment logic
+      rate: Math.min((prevState.rate + 0.01).toFixed(2), 1), // Adjust the increment logic
     }));
   };
 
@@ -167,6 +167,9 @@ const App = () => {
         src: audioLink,
         audioKey: prevState.audioKey + 1,
       }));
+
+      play({ playbackRate: state.pitch });
+
     } catch (error) {
       console.log(error);
     }
@@ -175,8 +178,7 @@ const App = () => {
   
 
   const { text, pitch, rate,waveform, speaker, src, audioKey } = state;
-  const [play] = useSound(src, { playbackRate: 1.0 });
-  play({ playbackRate: pitch });
+
 
   const genderOptions = [
     { value: "announcer", label: "🔊 announcer" },
@@ -491,7 +493,7 @@ const App = () => {
 
             {src && (
               <div style={{ margin: '10px 0' }}>
-                <audio key={audioKey} controls>
+                <audio key={audioKey} controls onPlay={() => play({ playbackRate: state.pitch })}>
                   <source src={src} type="audio/mpeg" />
                   Your browser does not support the audio element.
                 </audio>
