@@ -57,24 +57,18 @@ def receive_text():
                    "wave_temp":wave_temp,
                 }
             )
-            print(output)
-            audio_content = io.BytesIO(output['audio_out'])
-            audio_segment = AudioSegment.from_file(audio_content, format="mp3")
 
-            # Modify pitch using the speedup or slowdown technique
-            modified_pitch = audio_segment.speedup(playback_speed=wave_temp)
+            print(output['audio_out'])
 
-            # Convert the modified audio segment back to bytes
-            modified_audio_bytes = modified_pitch.export(format="mp3").read()
-
-            return send_file(io.BytesIO(modified_audio_bytes), mimetype="audio/mpeg")
-
-            # audio_link = output['audio_out']
+            return  output['audio_out']
 
 
-            # audio_file = "output.mp3"
-            # audio_output.save(os.path.join(os.path.dirname(__file__), audio_file))
-            # return send_file(audio_file, mimetype="audio/mpeg",as_attachment=True)
+            audio_link = output['audio_out']
+
+
+            audio_file = "output.mp3"
+            audio_output.save(os.path.join(os.path.dirname(__file__), audio_file))
+            return send_file(audio_file, mimetype="audio/mpeg",as_attachment=True)
         
 
             

@@ -27,7 +27,7 @@ const App = () => {
       pitch: parseFloat(event.target.value), 
     });
 
-    play({ playbackRate: this.state.pitch });
+  
   };
 
 
@@ -37,7 +37,7 @@ const App = () => {
       ...prevState,
       pitch: Math.max(prevState.pitch - 0.01, 0.5), // Adjust the decrement logic
     }));
-    play({ playbackRate: this.state.pitch });
+    
   };
 
   const handlePitchIncrement = () => {
@@ -45,7 +45,7 @@ const App = () => {
       ...prevState,
       pitch: Math.min(prevState.pitch + 0.01, 2), // Adjust the increment logic
     }));
-    play({ playbackRate: this.state.pitch });
+
   };
 
   const handleWaveformChange = (event) => {
@@ -176,6 +176,7 @@ const App = () => {
 
   const { text, pitch, rate,waveform, speaker, src, audioKey } = state;
   const [play] = useSound(src, { playbackRate: 1.0 });
+  play({ playbackRate: pitch });
 
   const genderOptions = [
     { value: "announcer", label: "🔊 announcer" },
