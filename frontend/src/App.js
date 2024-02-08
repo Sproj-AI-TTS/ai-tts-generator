@@ -4,6 +4,7 @@ import axios from 'axios';
 import Select from "react-tailwindcss-select";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-tailwindcss-select/dist/index.css'
+
 const App = () => {
   const [state, setState] = useState({
     text: '',
@@ -16,37 +17,7 @@ const App = () => {
     audioKey: 0,
   });
 
-
-
-
   const [play] = useSound(state.src, { playbackRate: state.pitch });
-
-  const handlePitchChange = (event) => {
-    setState({
-      ...state,
-      pitch: parseFloat(event.target.value).toFixed(2), 
-    });
-
-  
-  };
-
-
-
-  const handlePitchDecrement = () => {
-    setState((prevState) => ({
-      ...prevState,
-      pitch: Math.max((prevState.pitch - 0.01).toFixed(2), 0.5), // Adjust the decrement logic
-    }));
-    
-  };
-
-  const handlePitchIncrement = () => {
-    setState((prevState) => ({
-      ...prevState,
-      pitch: Math.min((prevState.pitch + 0.01).toFixed(2), 2), // Adjust the increment logic
-    }));
-
-  };
 
   const handleWaveformChange = (event) => {
     setState({
@@ -55,25 +26,19 @@ const App = () => {
     });
   };
 
+  // const handleWaveformDecrement = () => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     waveform: Math.max((prevState.waveform - 0.01).toFixed(2), 0), // Adjust the decrement logic
+  //   }));
+  // };
 
-
-
-
-  const handleWaveformDecrement = () => {
-    setState((prevState) => ({
-      ...prevState,
-      waveform: Math.max((prevState.waveform - 0.01).toFixed(2), 0), // Adjust the decrement logic
-    }));
-  };
-
-  const handleWaveformIncrement = () => {
-    setState((prevState) => ({
-      ...prevState,
-      waveform: Math.min((prevState.waveform + 0.01).toFixed(2), 1), // Adjust the increment logic
-    }));
-  };
-
-
+  // const handleWaveformIncrement = () => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     waveform: Math.min((prevState.waveform + 0.01).toFixed(2), 1), // Adjust the increment logic
+  //   }));
+  // };
 
   const handleRateChange = (event) => {
     setState({
@@ -82,23 +47,40 @@ const App = () => {
     });
   };
 
+  // const handleRateDecrement = () => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     rate: Math.max((prevState.rate - 0.01).toFixed(2), 0), // Adjust the decrement logic
+  //   }));
+  // };
 
+  // const handleRateIncrement = () => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     rate: Math.min((prevState.rate + 0.01).toFixed(2), 1), // Adjust the increment logic
+  //   }));
+  // };
 
+  // const handlePitchDecrement = () => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     pitch: Math.max((prevState.pitch - 0.01).toFixed(2), 0.5), // Adjust the decrement logic
+  //   }));
+  // };
 
-  const handleRateDecrement = () => {
-    setState((prevState) => ({
-      ...prevState,
-      rate: Math.max((prevState.rate - 0.01).toFixed(2), 0), // Adjust the decrement logic
-    }));
+  // const handlePitchIncrement = () => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     pitch: Math.min((prevState.pitch + 0.01).toFixed(2), 2), // Adjust the increment logic
+  //   }));
+  // };
+
+  const handlePitchChange = (event) => {
+    setState({
+      ...state,
+      pitch: parseFloat(event.target.value).toFixed(2), 
+    });
   };
-
-  const handleRateIncrement = () => {
-    setState((prevState) => ({
-      ...prevState,
-      rate: Math.min((prevState.rate + 0.01).toFixed(2), 1), // Adjust the increment logic
-    }));
-  };
-
 
   const handleChange = (event) => {
     setState({
@@ -106,8 +88,6 @@ const App = () => {
       text: event.target.value,
     });
   };
-
-
 
   const handleCapitalize = () => {
     const { text } = state;
@@ -123,19 +103,19 @@ const App = () => {
     }
   };
 
-
-  const handleSpeakerChange = (value) => {
-    console.log("value:", value.value);
+  const handleSpeakerChange = (event) => {
+    console.log("value:", event.value);
     setState({
       ...state,
-      speaker: value.value,
+      speaker: event.value,
     });
   };
 
-  const handleGenderChange = (value) => {
+  const handleGenderChange = (event) => {
+    console.log("value:", event.value);
     setState({
       ...state,
-      selectedGender: value.value,
+      selectedGender: event.value,
     });
   };
 
@@ -154,13 +134,7 @@ const App = () => {
         }
       );
 
-      
-
       const audioLink = response.data;
-
-
-
-      
 
       setState((prevState) => ({
         ...prevState,
@@ -175,23 +149,10 @@ const App = () => {
     }
   };
 
-  
-
   const { text, pitch, rate,waveform, speaker, src, audioKey } = state;
 
-
-  const genderOptions = [
+  const speakerOptions = [
     { value: "announcer", label: "🔊 announcer" },
-    { value: "de_speaker_0", label: "🔊 de_speaker_0" },
-    { value: "de_speaker_1", label: "🔊 de_speaker_1" },
-    { value: "de_speaker_2", label: "🔊 de_speaker_2" },
-    { value: "de_speaker_3", label: "🔊 de_speaker_3" },
-    { value: "de_speaker_4", label: "🔊 de_speaker_4" },
-    { value: "de_speaker_5", label: "🔊 de_speaker_5" },
-    { value: "de_speaker_6", label: "🔊 de_speaker_6" },
-    { value: "de_speaker_7", label: "🔊 de_speaker_7" },
-    { value: "de_speaker_8", label: "🔊 de_speaker_8" },
-    { value: "de_speaker_9", label: "🔊 de_speaker_9" },
     { value: "en_speaker_0", label: "🔊 en_speaker_0" },
     { value: "en_speaker_1", label: "🔊 en_speaker_1" },
     { value: "en_speaker_2", label: "🔊 en_speaker_2" },
@@ -202,6 +163,16 @@ const App = () => {
     { value: "en_speaker_7", label: "🔊 en_speaker_7" },
     { value: "en_speaker_8", label: "🔊 en_speaker_8" },
     { value: "en_speaker_9", label: "🔊 en_speaker_9" },
+    { value: "de_speaker_0", label: "🔊 de_speaker_0" },
+    { value: "de_speaker_1", label: "🔊 de_speaker_1" },
+    { value: "de_speaker_2", label: "🔊 de_speaker_2" },
+    { value: "de_speaker_3", label: "🔊 de_speaker_3" },
+    { value: "de_speaker_4", label: "🔊 de_speaker_4" },
+    { value: "de_speaker_5", label: "🔊 de_speaker_5" },
+    { value: "de_speaker_6", label: "🔊 de_speaker_6" },
+    { value: "de_speaker_7", label: "🔊 de_speaker_7" },
+    { value: "de_speaker_8", label: "🔊 de_speaker_8" },
+    { value: "de_speaker_9", label: "🔊 de_speaker_9" },
     { value: "es_speaker_0", label: "🔊 es_speaker_0" },
     { value: "es_speaker_1", label: "🔊 es_speaker_1" },
     { value: "es_speaker_2", label: "🔊 es_speaker_2" },
@@ -313,10 +284,12 @@ const App = () => {
     { value: "zh_speaker_8", label: "🔊 zh_speaker_8" },
     { value: "zh_speaker_9", label: "🔊 zh_speaker_9" },
   ];
-  const options = [
+
+  const genderOptions = [
     { value: "male", label: "👦🏻 Male" },
     { value: "female", label: "👧🏻 Female" }
   ];
+
   return (
     <body className='bg-[#060606] text-gray-200 flex items-center justify-center h-screen'>
       <div className='absolute w-1/4 h-1/4 rounded-full bg-gradient-to-r from-stext to-etext blur-3xl opacity-15  top-0 left-0 '></div>
@@ -367,14 +340,14 @@ const App = () => {
                 Waveform Temp (0 to 1):
               </label>
               <div className="flex flex-row h-9 rounded-lg relative bg-transparent mt-1">
-                <button
+                {/* <button
                   onClick={handleWaveformDecrement}
                   className="bg-gray-200 text-gray-900 hover:text-gray-700 hover:bg-gray-100 h-full w-20 rounded-l cursor-pointer outline-none border-r-[1px] border-gray-300"
                 >
                   <span className="m-auto text-2xl font-thin">−</span>
-                </button>
+                </button> */}
                 <input
-                  type="numbe"
+                  type="number"
                   className="outline-none focus:outline-none text-center w-full bg-gray-200 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-900"
                   name="custom-input-number"
                   step="0.01" min="0" max="1"
@@ -385,12 +358,12 @@ const App = () => {
                 // onChange={handlePitchChange}
                 // value={value.toFixed(2)} // Display value with two decimal places
                 />
-                <button
+                {/* <button
                   onClick={handleWaveformIncrement}
                   className="bg-gray-200 text-gray-900 hover:text-gray-700 hover:bg-gray-100 h-full w-20 rounded-r cursor-pointer border-l-[1px] border-gray-300"
                 >
                   <span className="m-auto text-2xl font-thin">+</span>
-                </button>
+                </button> */}
               </div>
             </div>
 
@@ -399,26 +372,26 @@ const App = () => {
                 Text Temp (0 to 1):
               </label>
               <div className="flex flex-row h-9 rounded-lg relative bg-transparent mt-1">
-                <button
+                {/* <button
                   onClick={handleRateDecrement}
                   className="bg-gray-200 text-gray-900 hover:text-gray-700 hover:bg-gray-100 h-full w-20 rounded-l cursor-pointer outline-none border-r-[1px] border-gray-300"
                 >
                   <span className="m-auto text-2xl font-thin">−</span>
-                </button>
+                </button> */}
                 <input
-                  type="numbe"
+                  type="number"
                   className="outline-none focus:outline-none text-center w-full bg-gray-200 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-900"
                   name="custom-input-number"
                   step="0.01" min="0" max="1"
                   value={rate}
                   onChange={handleRateChange}
                 />
-                <button
+                {/* <button
                   onClick={handleRateIncrement}
                   className="bg-gray-200 text-gray-900 hover:text-gray-700 hover:bg-gray-100 h-full w-20 rounded-r cursor-pointer border-l-[1px] border-gray-300"
                 >
                   <span className="m-auto text-2xl font-thin">+</span>
-                </button>
+                </button> */}
               </div>
             </div>
 
@@ -428,26 +401,26 @@ const App = () => {
                 Pitch (0.5 to 2):
               </label>
               <div className="flex flex-row h-9 rounded-lg relative bg-transparent mt-1">
-                <button
+                {/* <button
                   onClick={handlePitchDecrement}
                   className="bg-gray-200 text-gray-900 hover:text-gray-700 hover:bg-gray-100 h-full w-20 rounded-l cursor-pointer outline-none border-r-[1px] border-gray-300"
                 >
                   <span className="m-auto text-2xl font-thin">−</span>
-                </button>
+                </button> */}
                 <input
-                  type="numbe"
+                  type="number"
                   className="outline-none focus:outline-none text-center w-full bg-gray-200 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-900"
                   name="custom-input-number"
                   step="0.01" min="0.5" max="2"
                   value={pitch}
                   onChange={handlePitchChange}
                 />
-                <button
+                {/* <button
                   onClick={handlePitchIncrement}
                   className="bg-gray-200 text-gray-900 hover:text-gray-700 hover:bg-gray-100 h-full w-20 rounded-r cursor-pointer border-l-[1px] border-gray-300"
                 >
                   <span className="m-auto text-2xl font-thin">+</span>
-                </button>
+                </button> */}
               </div>
             </div>
             {/* <label>
@@ -463,7 +436,7 @@ const App = () => {
               <Select
                 value={state.speaker}
                 onChange={handleSpeakerChange}
-                options={genderOptions}
+                options={speakerOptions}
               />
             </div>
             <div className='h-10 w-full flex items-center justify-start'>
@@ -473,7 +446,7 @@ const App = () => {
               <Select
                 value={state.selectedGender}
                 onChange={handleGenderChange}
-                options={options}
+                options={genderOptions}
               />
             </div>
 
@@ -484,8 +457,6 @@ const App = () => {
             <button className='bg-blue-500 shadow-xl shadow-blue-500/50 py-2 px-4 rounded-lg text-white font-semibold' onClick={handleSubmit}>
               Submit
             </button>
-
-
 
             <div className='my-4'>
               <h2 className='text-xl text-gray-300 font-semibold'>Audio Output:</h2>
@@ -501,7 +472,6 @@ const App = () => {
             )}
           </div>
         </div>
-
       </div>
     </body>
   );

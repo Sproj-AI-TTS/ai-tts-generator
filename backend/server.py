@@ -12,13 +12,10 @@ from getpass import getpass
 app = Flask(__name__)
 cors = CORS(app)
 
-
 REPLICATE_API_TOKEN = 'r8_K1cFQOLKUuw9nzTzc6HeRWHbtDkRSFP0JNUHl'
 environ["REPLICATE_API_TOKEN"] = REPLICATE_API_TOKEN
 
-
-
-# # Route for receiving text
+# Route for receiving text
 @app.route('/',methods=['POST', 'GET'])
 @cross_origin()
 def receive_text():
@@ -39,15 +36,12 @@ def receive_text():
 
         if gender == 'male':
             req= "[MAN]:"+req
-        elif gender == 'female' :
+        elif gender == 'female':
             req= "[WOMAN]:"+req
 
         print(req)
 
-        
-
         try:
-
             output = replicate.run(
             "suno-ai/bark:b76242b40d67c76ab6742e987628a2a9ac019e11d56ab96c4e91ce03b79b2787",
             input={ "prompt": req,
@@ -60,19 +54,12 @@ def receive_text():
 
             print(output['audio_out'])
 
-            return  output['audio_out']
-
+            return output['audio_out']
 
             audio_link = output['audio_out']
-
-
             audio_file = "output.mp3"
             audio_output.save(os.path.join(os.path.dirname(__file__), audio_file))
             return send_file(audio_file, mimetype="audio/mpeg",as_attachment=True)
-        
-
-            
-
 
             # engine = pyttsx3.init()
             # engine.setProperty('voice', 'en-us')
@@ -101,17 +88,11 @@ def receive_text():
             # audio_output.save(os.path.join(os.path.dirname(__file__), audio_file))
             # return send_file(audio_file, mimetype="audio/mpeg",as_attachment=True)
         
-
-        
         except Exception as e:
             print("Error:", e)
             return {"error": str(e)}
 
 
-
-
 # Running app
 if __name__ == '__main__':
     app.run(debug=True)
-
-
