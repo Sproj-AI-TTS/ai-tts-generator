@@ -2,13 +2,13 @@
 FROM python:3.8-slim
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /app/backend
 
 # Copy the requirements file into the container
-# COPY requirements.txt .
+COPY requirements.txt .
 
 # Install the required Python packages
-# RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt
 
 # Copy the rest of the application code into the container
 COPY . .
@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 5000
 
 # Start the Flask app
-CMD ["python", "./backend/server.py"]
+CMD ["python", ".server.py"]
