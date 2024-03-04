@@ -19,12 +19,12 @@ const Signup = (props) => {
   const [, setCookies] = useCookies('access_token');
   // const [imageUrl, setImageUrl] = useState("");
 
-  const handleClick = async (username, name, password, password2,pic) => {
+  const handleClick = async (username, name, password, password2,) => {
     console.log("The form was submitted with the following data:");
-    console.log({ username, name, password, password2 ,pic});
+    console.log({ username, name, password, password2});
 
     const formData = new FormData();
-    formData.append("file", pic);
+    // formData.append("file", pic);
     formData.append("upload_preset", "et2wvsbo");
 
     const response= await axios.post('https://api.cloudinary.com/v1_1/dgbg003qn/image/upload', formData)
@@ -176,7 +176,7 @@ const Form = (props) => {
      <FormInput description="Password" placeholder="Enter your password" type="password"  value={password} onChange={handlePasswordChange}/>
      <FormInput description="Re-Enter Password" placeholder="Re-enter your password" type="password"  value={password2} onChange={handlePassword2Change}/>
      {/* <FormInputFile description="Profile Picture" onChange={handleFileInputChange} /> */}
-     <FormButton title="Sign Up" onClick={() => props.onClick(username, name, password, password2,pic)}/>
+     <FormButton title="Sign Up" onClick={() => props.onClick(username, name, password, password2)}/>
    </span>
   );
   };
