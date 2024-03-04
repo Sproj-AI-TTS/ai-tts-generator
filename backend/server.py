@@ -9,7 +9,12 @@ from os import environ
 # from gtts import gTTS
 # import REPLICATE_API_TOKEN
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_url_path='',
+    static_folder='../client/build',
+    template_folder='../client/build'
+)
 cors = CORS(app)
 
 REPLICATE_API_TOKEN = "r8_K1cFQOLKUuw9nzTzc6HeRWHbtDkRSFP0JNUHl"
