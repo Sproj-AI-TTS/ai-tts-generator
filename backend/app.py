@@ -1,4 +1,4 @@
-from flask import Flask, send_file, request
+from flask import Flask, request
 from flask_cors import CORS, cross_origin
 import replicate
 from os import environ
@@ -12,8 +12,8 @@ from os import environ
 app = Flask(
     __name__,
     static_url_path='',
-    static_folder='../client/build',
-    template_folder='../client/build'
+    static_folder='../frontend/build',
+    template_folder='../frontend/build'
 )
 cors = CORS(app)
 
