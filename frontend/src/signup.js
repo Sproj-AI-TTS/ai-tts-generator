@@ -145,12 +145,12 @@ const Form = (props) => {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
 
-  const [pic, setPic] = useState("");
+  // const [pic, setPic] = useState("");
 
 
-  const handleFileInputChange = async event => {
-    setPic(event.target.files[0]);
-  }
+  // const handleFileInputChange = async event => {
+  //   setPic(event.target.files[0]);
+  // }
     
 
   const handleUsernameChange = (event) => {
@@ -193,10 +193,10 @@ const FormInput = props => (
     <input type={props.type} placeholder={props.placeholder} value={props.value} onChange={props.onChange}/>
   </div>  
 );
-const FormInputFile = props => (
-  <div class="row">
-    <label>{props.description}</label>
-    <input type="file" onChange={props.onChange} />
-    {/* <button onClick={() => document.querySelector('input[type="file"]').click()}>Upload</button> */}
-  </div>  
-);
+// const FormInputFile = props => (
+//   <div class="row">
+//     <label>{props.description}</label>
+//     <input type="file" onChange={props.onChange} />
+//     {/* <button onClick={() => document.querySelector('input[type="file"]').click()}>Upload</button> */}
+//   </div>  
+// );
