@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:600|Work+Sans:400,500,600,700&display=swap');
+
+/* #menu-container {
+    position:relative;
+    white-space:normal;
+} */
+
+
+.su-body{
+  /* background: rgb(34,193,195); */
+  background: linear-gradient(135deg, rgb(34,193,195) 0%,     rgb(220, 39, 202) 100%) !important;
+  background-size: cover;
+  font-family: "work sans";
+  overflow: visible;
+
+
+  /* transform: scale(0.80); */
+  /* transform-origin: 0 0; */
+}
+
+
+html{
+  font-size: 100%;
+}
+
+
+.split-left {
+  background-image: linear-gradient(135deg, rgb(34,193,195) 0%,     rgb(220, 39, 202) 100%);
+  width: 55%;
+  position: absolute;
+  height: 100%;
+  left: 0;
+}
+
+.split-left>img{
+  
+  padding: 13% 15%;
+  width: 450px;
+  display: flex;
+  justify-content: center;
+
+}
+
+.split-right {
+  background-color: white;
+  width: 45%;
+  position: absolute;
+  height: 100%;
+  right: 0;
+}
+
+
+#signupform{
+  /* max-width: 500px;
+  min-width: 300px;
+  min-height: 500px;
+  max-height: 900px; */
+  width: 55%;
+  height: 630px;    /* 100 % */
+  margin: 23px auto;
+  /* background-color: #FFFFFF; */
+  border-radius: 25px;
+  text-align: center;
+  overflow: visible ;
+  font-size: 15px;
+  /* text-decoration: none; border-bottom:1px solid red; */
+}
+
+
+#signup-headerTitle{
+  text-align: center;
+  font-family: 'open sans', sans-serif;
+  padding: 2rem 0;
+  margin: 0;
+  font-size: 2rem;
+  display:inline-block; 
+  padding:0px; 
+  margin-left:-4px; 
+}
+
+.row{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2rem;
+  max-width: 100%;
+  
+}
+
+.row input{
+  width: 80%;
+  box-sizing: border-box;
+	border: none;
+  font-size: 1.3rem;
+  padding-left: 1.5rem;
+  padding-bottom: 1rem;
+  box-shadow: inset 0px -3px 0px 0px rgba(187,187,187,0.2);
+  transition: box-shadow 0.2s ease-in;
+}
+
+.row input:focus{
+   box-shadow: inset 0px -3px 0px 0px rgba(34,193,195,0.7);
+   outline: none;
+}
+
+.row input::-webkit-input-placeholder{
+  opacity: 1;
+  transition: opacity 0.25s ease-out;
+}
+
+.row input:hover::-webkit-input-placeholder,
+.row input:focus::-webkit-input-placeholder{
+  opacity: 0;
+}
+
+.row label{
+  align-self: start;
+  padding-left: 4.5rem;
+  padding-bottom: 0.5rem;
+  color: rgba(187,187,187,0.9);
+}
+
+.row button{
+  border-radius: 25px;
+  width: 80%;
+  height: 40px;
+  font-size: 1.3rem;
+  color: white;
+  font-weight: 700;
+  background: rgb(34,193,195);
+  background: linear-gradient(90deg, rgb(184, 20, 216) 0%,     rgb(253, 45, 232) 100%);
+  border: 0px;
+  cursor: pointer;
+  transition: opacity 0.25s ease-out;
+}
+
+.row button:hover{
+  opacity: 0.8;
+}
+
+#button{
+  padding-bottom: 1.5rem;
+}
+
+
