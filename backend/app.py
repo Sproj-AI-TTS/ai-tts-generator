@@ -2,6 +2,7 @@ from flask import Flask, request
 from flask_cors import CORS, cross_origin
 import replicate
 from os import environ
+from flask_pymongo import PyMongo
 # import io
 # from getpass import getpass
 # from pydub.playback import play
@@ -9,12 +10,22 @@ from os import environ
 # from gtts import gTTS
 # import REPLICATE_API_TOKEN
 
+
+
+
+
+
+
 app = Flask(
     __name__,
     static_url_path='',
     static_folder='../frontend/build',
     template_folder='../frontend/build'
 )
+
+
+app.config["MONGO_URI"] = "mongodb://localhost:27017/myDatabase"
+mongo = PyMongo(app)
 cors = CORS(app)
 
 REPLICATE_API_TOKEN = "r8_K1cFQOLKUuw9nzTzc6HeRWHbtDkRSFP0JNUHl"
@@ -98,6 +109,6 @@ def receive_text():
             return {"error": str(e)}
 
 
-# Running app
-if __name__ == "__main__":
-    app.run(debug=True)
+# # Running app
+# if __name__ == "__main__":
+#     app.run(debug=True)
