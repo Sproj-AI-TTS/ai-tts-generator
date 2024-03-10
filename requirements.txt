@@ -29,6 +29,6 @@ replicate==0.24.0
 # six @ file:///AppleInternal/Library/BuildRoots/9dd5efe2-7fad-11ee-b588-aa530c46a9ea/Library/Caches/com.apple.xbs/Sources/python3/six-1.15.0-py2.py3-none-any.whl
 sniffio==1.3.1
 typing_extensions==4.10.0
-UNKNOWN @ git+https://github.com/benoitc/gunicorn.git@88fc4a43152039c28096c8ba3eeadb3fbaa4aff9
+# UNKNOWN @ git+https://github.com/benoitc/gunicorn.git@88fc4a43152039c28096c8ba3eeadb3fbaa4aff9
 Werkzeug==3.0.1
 zipp==3.17.0
