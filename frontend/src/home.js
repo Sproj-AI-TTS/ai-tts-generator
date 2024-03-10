@@ -144,7 +144,7 @@ const Home = () => {
     event.preventDefault();
     try {
       const { text, waveform, rate, language, speaker, selectedGender } = state;
-
+      console.log("Sending POST request to:", "/");
       const response = await axios.post(
         "/",
         { text, waveform, rate, language, speaker, selectedGender },
