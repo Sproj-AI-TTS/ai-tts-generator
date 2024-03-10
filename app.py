@@ -18,6 +18,9 @@ from flask_pymongo import PyMongo
 
 app = Flask(
     __name__,
+    static_url_path='',
+    static_folder='../frontend/build',
+    template_folder='../frontend/build'
 )
 
 cors = CORS(app)
