@@ -27,14 +27,14 @@ const Signup = (props) => {
     // formData.append("file", pic);
     formData.append("upload_preset", "et2wvsbo");
 
-    const response= await axios.post('https://api.cloudinary.com/v1_1/dgbg003qn/image/upload', formData)
+    // const response= await axios.post('https://api.cloudinary.com/v1_1/dgbg003qn/image/upload', formData)
     
 
     
 
-    const url =  response.data.secure_url;
+    // const url =  response.data.secure_url;
     
-    console.log(url)
+    // console.log(url)
 
 
     function isValidUsername(username) {
@@ -74,7 +74,7 @@ const Signup = (props) => {
         console.log("Password error")
         return;
       }
-      const response = await axios.post("/signup", { username, name, password,url });
+      const response = await axios.post("https://ai-tts-generator-2.onrender.com/signup", { username, name, password });
       if (response.data.message === "Success") {
         alert("User Created");
         navigate("/login")
@@ -97,7 +97,7 @@ const Signup = (props) => {
 
     // Continue with signup process
     try {
-      const response = await axios.post("http://localhost:3010/signup", { username, password });
+      const response = await axios.post("https://ai-tts-generator-2.onrender.com/signup", { username, password });
       setCookies(response.data.token);
       window.localStorage.setItem("User_ID", response.data.userID);
       console.log(response.data.userID);

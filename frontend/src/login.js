@@ -25,7 +25,7 @@ const Login = (props) => {
     }
 
     try {
-      const response=await axios.post("/login", { username, password });
+      const response=await axios.post("https://ai-tts-generator-2.onrender.com/login", { username, password });
      
       setCookies(response.data.token);
       window.localStorage.setItem("User_ID", response.data.userID);
