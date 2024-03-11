@@ -146,7 +146,7 @@ const Home = () => {
       const { text, waveform, rate, language, speaker, selectedGender } = state;
       console.log("Sending POST request to:", "/");
       const response = await axios.post(
-        "https://ai-tts-generator-2.onrender.com/",
+        "/",
         { text, waveform, rate, language, speaker, selectedGender },
         {
           headers: {
