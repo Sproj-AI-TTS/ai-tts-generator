@@ -1,6 +1,6 @@
 import './signup.css';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import React, { useState } from "react";
 import axios from "axios";
 import {useCookies} from 'react-cookie'
@@ -177,6 +177,10 @@ const Form = (props) => {
      <FormInput description="Re-Enter Password" placeholder="Re-enter your password" type="password"  value={password2} onChange={handlePassword2Change}/>
      {/* <FormInputFile description="Profile Picture" onChange={handleFileInputChange} /> */}
      <FormButton title="Sign Up" onClick={() => props.onClick(username, name, password, password2)}/>
+     <p>
+          {" "}
+          Already have an account? <Link to="/login">Login instead</Link>
+      </p>
    </span>
   );
   };

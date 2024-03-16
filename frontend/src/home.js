@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSound } from "use-sound";
 import axios from "axios";
 import Select from "react-tailwindcss-select";
@@ -19,16 +20,24 @@ const Home = () => {
   });
 
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const navigate = useNavigate();
 
   const handleSignIn = () => {
-    // Logic to sign in the user
+    // Redirect to the login page
     setIsSignedIn(true);
+    navigate("/login");
   };
 
+  // Logic to sign out the user
   const handleSignOut = () => {
-    // Logic to sign out the user
     setIsSignedIn(false);
+    // Additional logic for sign-out if needed
   };
+
+  const [generationsLeft, setGenerationsLeft] = useState(isSignedIn ? 20 : 3);
+  // TODO: Implement limited number of generations
+  // If user is NOT signed in, allow 3 generations, then disable and grey out the Submit button
+  // If user is signed in, allow 20 generations, then disable and grey out the Submit button
 
   const [play] = useSound(state.src, { playbackRate: state.pitch });
 
@@ -163,12 +172,16 @@ const Home = () => {
         audioKey: prevState.audioKey + 1,
       }));
 
+      setGenerationsLeft(generationsLeft - 1);
+
       play({ playbackRate: state.pitch });
 
     } catch (error) {
       console.log(error);
     }
   };
+
+  const isSubmitDisabled = generationsLeft <= 0;
 
   const { text, pitch, rate, waveform, language, speaker, selectedGender, src, audioKey } = state;
 
@@ -242,6 +255,9 @@ const Home = () => {
 
             <div className="text-sm my-3">
               Character count: {text.length}
+            </div>
+            <div className="text-sm my-3">
+              Audio generations reamining: {generationsLeft}
             </div>
           </div>
           </div>
@@ -340,7 +356,7 @@ const Home = () => {
                 Emphasize
               </button>
 
-              <button className="bg-blue-500 shadow-xl  shadow-blue-500/50 ml-4 py-2 px-10 rounded-lg text-white font-semibold" onClick={handleSubmit}>
+              <button className="bg-blue-500 shadow-xl  shadow-blue-500/50 ml-4 py-2 px-10 rounded-lg text-white font-semibold" onClick={handleSubmit} disabled={isSubmitDisabled}>
                 Submit
               </button>
             </div>
